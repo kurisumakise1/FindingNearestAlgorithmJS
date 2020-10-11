@@ -2,7 +2,7 @@
 let numberArray1 = [];
 let numberArray2 = [];
 let l = 2;
-let i1,i,a,a1,b,c,x,x1,x2,xid,xidr,xidc,i11,whieSayısı,i87,a87,uzunluk,aid,aidc,aidr,i99,enBasKare;
+let i1, i, a, a1, b, c, x, x1, x2, xid, xidr, xidc, i11, whieSayısı, i87, a87, uzunluk, aid, aidc, aidr, i99, enBasKare;
 let kacEleman = Number(prompt("How many factors will there be? Please do not enter a value less than 3 and not an integer. (The number of elements in both arrays are the same.):"));
 if (kacEleman < 3) {
     throw new Error("NUMBER OF ELEMENTS CANNOT BE 2 OR LESS")
@@ -85,9 +85,11 @@ button.addEventListener("click", function (e) {
         let y = document.getElementById("r" + x1 + "c" + x2);
         y.innerHTML = x;
         if (x > target) {
-            xid = y.id.split("");
-            xidr = Number(xid[1]);
-            xidc = Number(xid[3]);
+            xid = y.id;
+            let xx = xid.search("r");
+            let yy = xid.search("c");
+            xidr = Number(xid.slice((xx + 1), yy));
+            xidc = Number(xid.slice(yy + 1, (xid.length + 1)));
             //kacEleman is the last number of r and c.
             if ((((xidr !== (kacEleman + 1))) || ((xidc !== (kacEleman + 1)))) || (((xidr !== (kacEleman + 1))) && ((xidc !== (kacEleman + 1))))) {
                 for (i11 = (kacEleman + 1); i11 >= xidr; --i11) {
@@ -97,34 +99,38 @@ button.addEventListener("click", function (e) {
                 }
             }
         } else if (x < target) {
-            xid = y.id.split("");
-            xidr = Number(xid[1]);
-            xidc = Number(xid[3]);
+            xid = y.id;
+            let xx = xid.search("r");
+            let yy = xid.search("c");
+            xidr = Number(xid.slice((xx + 1), yy));
+            xidc = Number(xid.slice(yy + 1, (xid.length + 1)));
             for (i11 = 1; i11 <= xidr; ++i11) {
                 for (a1 = 1; a1 <= xidc; ++a1) {
                     document.getElementById("r" + i11 + "c" + a1).setAttribute("style", "background-color:orange;");
                 }
             }
         } else if (x === target) {
-            xid = y.id.split("");
-            xidr = Number(xid[1]);
-            xidc = Number(xid[3])
-            console.log("Target found : " + "(" + document.getElementById("r1" + "c" + xidc).innerHTML + ")" + "," + "(" + document.getElementById("r" + xidr + "c1").innerHTML + ")" +" With this id: " + "r" + xidr + "c" + xidc);
+            xid = y.id;
+            let xx = xid.search("r");
+            let yy = xid.search("c");
+            xidr = Number(xid.slice((xx + 1), yy));
+            xidc = Number(xid.slice(yy + 1, (xid.length + 1)));
+            console.log("Target found : " + "(" + document.getElementById("r1" + "c" + xidc).innerHTML + ")" + "," + "(" + document.getElementById("r" + xidr + "c1").innerHTML + ")" + " With this id: " + "r" + xidr + "c" + xidc);
             let p = document.createElement("p");
             document.body.appendChild(p);
-            p.setAttribute("style","float:right;color:white;");
-            p.innerHTML = "<br>" + " Target found : " + "(" + document.getElementById("r1" + "c" + xidc).innerHTML + ")" + "," + "(" + document.getElementById("r" + xidr + "c1").innerHTML + ")" +" With this id: " + "r" + xidr + "c" + xidc + "<br>" + "</br>";
+            p.setAttribute("style", "float:right;color:white;");
+            p.innerHTML = "<br>" + " Target found : " + "(" + document.getElementById("r1" + "c" + xidc).innerHTML + ")" + "," + "(" + document.getElementById("r" + xidr + "c1").innerHTML + ")" + " With this id: " + "r" + xidr + "c" + xidc + "<br>" + "</br>";
         }
     }
 })
 function mutlakDeger(L) {
     if (L > target) {
         return L - target;
-    }else if (target > L) {
+    } else if (target > L) {
         return target - L;
-    }else if (L === target) {
+    } else if (L === target) {
         return 0;
-    }else {
+    } else {
         return 0;
     }
 }
@@ -147,45 +153,47 @@ button2.addEventListener("click", function () {
             }
         }
         uzunluk = newLeftNumbers.length;
-        for(i99=0;i99<uzunluk;++i99) {
+        for (i99 = 0; i99 < uzunluk; ++i99) {
             newLeftNumbersMutlak[i99] = mutlakDeger(newLeftNumbers[i99]);
             newLeftNumbersMutlak2[i99] = newLeftNumbersMutlak[i99];
         }
-        newLeftNumbersMutlak2.sort(function(a, b){return b-a})
+        newLeftNumbersMutlak2.sort(function (a, b) { return b - a })
         console.log(newLeftNumbersMutlak2);
         newLeftNumbersMutlak.find(finding);
-        for(i=1;i<(kacEleman+1);++i) {
-            for(a=1;a<(kacEleman+1);++a) {
+        for (i = 1; i < (kacEleman + 1); ++i) {
+            for (a = 1; a < (kacEleman + 1); ++a) {
                 if (i === 1 && a === 1) {
                     continue;
                 }
                 if (typeof (document.getElementById("r" + i + "c" + a).innerHTML) !== 'undefined' && document.getElementById("r" + i + "c" + a).innerHTML !== null) {
-                    for(i87=0;i87<closestOnesIndex.length;++i87) {
+                    for (i87 = 0; i87 < closestOnesIndex.length; ++i87) {
                         if (document.getElementById("r" + i + "c" + a).getAttribute("style") === "background-color:blue;" && Number(document.getElementById("r" + i + "c" + a).innerHTML) === newLeftNumbers[closestOnesIndex[i87]]) {
-                            if((document.getElementById("r" + i + "c" + a).innerHTML) !== "_") {
+                            if ((document.getElementById("r" + i + "c" + a).innerHTML) !== "_") {
                                 let K = document.getElementById("r" + i + "c" + a);
-                                let array2 = K.id.split("");
-                                let array2idr = array2[1];
-                                let array2idc = array2[3];
-                                console.log("Nearest target(s) found at: " + "(" + document.getElementById("r1" + "c" + array2idc).innerHTML + ")" + "," + "(" + document.getElementById("r" + array2idr + "c1").innerHTML + ")"+" With this id: " + "r" + array2idr + "c" + array2idc);
+                                let array2 = K.id;
+                                let xx = array2.search("r");
+                                let yy = array2.search("c");
+                                let array2idr = Number(array2.slice((xx + 1), yy));
+                                let array2idc = Number(array2.slice(yy + 1, (array2.length + 1)));
+                                console.log("Nearest target(s) found at: " + "(" + document.getElementById("r1" + "c" + array2idc).innerHTML + ")" + "," + "(" + document.getElementById("r" + array2idr + "c1").innerHTML + ")" + " With this id: " + "r" + array2idr + "c" + array2idc);
                                 let p = document.createElement("p");
                                 document.body.appendChild(p);
-                                p.setAttribute("style","float:right;color:white;");
-                                p.innerHTML = "<br>"+ " Nearest target(s) found at: " + "(" + document.getElementById("r1" + "c" + array2idc).innerHTML + ")" + "," + "(" + document.getElementById("r" + array2idr + "c1").innerHTML + ")"+" With this id: " + "r" + array2idr + "c" + array2idc +"<br>" +"</br>";
+                                p.setAttribute("style", "float:right;color:white;");
+                                p.innerHTML = "<br>" + " Nearest target(s) found at: " + "(" + document.getElementById("r1" + "c" + array2idc).innerHTML + ")" + "," + "(" + document.getElementById("r" + array2idr + "c1").innerHTML + ")" + " With this id: " + "r" + array2idr + "c" + array2idc + "<br>" + "</br>";
                             }
                         }
                     }
-                }else {
+                } else {
                     continue;
-                }    
+                }
             }
         }
     }
 })
 enBasKare = document.getElementById("r1c1");
-enBasKare.setAttribute("style","background-color:pink;")
-function finding(x,y) {
-    if (x === newLeftNumbersMutlak2[uzunluk-1]) {
+enBasKare.setAttribute("style", "background-color:pink;")
+function finding(x, y) {
+    if (x === newLeftNumbersMutlak2[uzunluk - 1]) {
         closestOnesIndex[i109] = y;
         ++i109;
     }
