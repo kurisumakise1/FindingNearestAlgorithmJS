@@ -1,0 +1,8 @@
+body {
+    background-color: rgb(78, 78, 78);
+}
+table, td, th {
+    border: 1px solid black;
+    width: 300px;
+    text-align: center;
+ }
